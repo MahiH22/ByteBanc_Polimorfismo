@@ -7,7 +7,7 @@ package com.bytebank.modelo;
  * @return
  */
 
-public abstract class Cuenta {
+public abstract class Cuenta implements Comparable<Cuenta>{
 	protected double saldo;
 	private int agencia;
 	private int numero;
@@ -65,6 +65,9 @@ public abstract class Cuenta {
 	public int getAgencia() {
 		return agencia;
 	}
+	public int getNumero() {
+		return this.numero;
+	}
 	public void setAgencia(int agencia){
 		if(agencia > 0) {
 			this.agencia = agencia;
@@ -81,8 +84,23 @@ public abstract class Cuenta {
 	}
 	@Override
 	public String toString() {
-		String cuenta = "Numero: "+ this.numero + " Agencia: "+ this.agencia;
+		String cuenta = "Agencia: "+ this.agencia+" Numero: "+ this.numero +" Nombre titular: "+this.titular.getNombre();
 		return cuenta;
-		
 	}
+	
+	public boolean esIgual(Cuenta cuenta) {
+		return this.agencia == cuenta.getAgencia() && this.numero == cuenta.getNumero();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Cuenta cuenta = (Cuenta)obj;
+		return (this.agencia == cuenta.getAgencia() && this.numero == cuenta.getNumero());
+	}
+	
+	@Override
+	public int compareTo(Cuenta o) {
+		return Integer.compare(this.agencia, o.getAgencia());
+	}
+	
 }
